@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --chart-bg: #050814;
+    --chart-grid: #132247;
+    --chart-accent-cyan: #00e5ff;
+    --chart-accent-magenta: #f43f5e;
+    --chart-accent-purple: #c026d3;
+    --chart-accent-yellow: #facc15;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #050814;
+    color: #e2e8f0;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* 3D Perspective container utilities */
+.perspective-container {
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+}
+
+.perspective-chart-3d {
+  transform: rotateX(14deg) rotateY(-8deg) rotateZ(1deg) scale(0.96);
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.perspective-chart-3d:hover {
+  transform: rotateX(10deg) rotateY(-5deg) rotateZ(0deg) scale(0.98);
+}
+
+.perspective-chart-flat {
+  transform: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom cyber grid pattern */
+.cyber-grid-bg {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(20, 45, 95, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 45, 95, 0.35) 1px, transparent 1px);
+}
+
+.cyber-grid-dense {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(30, 64, 130, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 64, 130, 0.25) 1px, transparent 1px);
+}
+
+/* Glow effects */
+.glow-cyan {
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.5));
+}
+
+.glow-magenta {
+  filter: drop-shadow(0 0 6px rgba(244, 63, 94, 0.5));
+}
+
+.glow-yellow {
+  filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6));
+}
+
+.glow-purple {
+  filter: drop-shadow(0 0 8px rgba(192, 38, 211, 0.6));
+}
+
+/* Custom dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090d20;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}

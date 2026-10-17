@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "Public profile and metadata for an authenticated trader",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "photoURL": { "type": "string", "maxLength": 1024 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "email"]
+    },
+    "savedStrategy": {
+      "title": "SavedStrategy",
+      "description": "Custom Python quantitative trading strategy saved by a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "code": { "type": "string", "maxLength": 20000 },
+        "category": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "name", "code"]
+    },
+    "tradeOrder": {
+      "title": "TradeOrder",
+      "description": "User simulated execution or live paper trading order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "symbol": { "type": "string", "maxLength": 32 },
+        "side": { "type": "string", "enum": ["BUY", "SELL"] },
+        "amount": { "type": "number" },
+        "price": { "type": "number" },
+        "status": { "type": "string", "maxLength": 32 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "symbol", "side", "amount", "price", "status"]
+    },
+    "backtestReport": {
+      "title": "BacktestReport",
+      "description": "Saved performance metrics and summary of a backtest execution",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "strategyName": { "type": "string", "maxLength": 128 },
+        "symbol": { "type": "string", "maxLength": 32 },
+        "timeframe": { "type": "string", "maxLength": 16 },
+        "totalReturnPct": { "type": "number" },
+        "winRatePct": { "type": "number" },
+        "sharpeRatio": { "type": "number" },
+        "maxDrawdownPct": { "type": "number" },
+        "profitFactor": { "type": "number" },
+        "totalTrades": { "type": "number" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "strategyName", "symbol"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/userProfile" },
+      "description": "Root user profile document"
+    },
+    "/users/{userId}/strategies/{strategyId}": {
+      "schema": { "$ref": "#/entities/savedStrategy" },
+      "description": "User's saved Python quant strategies"
+    },
+    "/users/{userId}/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/tradeOrder" },
+      "description": "User's trade order book"
+    },
+    "/users/{userId}/backtests/{backtestId}": {
+      "schema": { "$ref": "#/entities/backtestReport" },
+      "description": "User's backtest execution records"
+    }
+  }
+}

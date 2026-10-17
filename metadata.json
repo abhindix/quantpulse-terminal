@@ -1,0 +1,6 @@
+{
+  "name": "QuantPulse - Python Financial Chart & Trading Terminal",
+  "description": "High-performance quantitative trading terminal and financial chart engine featuring interactive 3D perspective, multi-indicator overlays, automated buy/sell signals, and integrated Python strategy backtester.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

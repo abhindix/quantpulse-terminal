@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global deny-all default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // User profile documents
+    match /users/{userId} {
+      allow read, write: if isValidId(userId) && isOwner(userId);
+
+      // Subcollection: Saved Python Strategies
+      match /strategies/{strategyId} {
+        allow read, write: if isValidId(userId) && isValidId(strategyId) && isOwner(userId);
+      }
+
+      // Subcollection: Trade Orders
+      match /orders/{orderId} {
+        allow read, write: if isValidId(userId) && isValidId(orderId) && isOwner(userId);
+      }
+
+      // Subcollection: Backtests History
+      match /backtests/{backtestId} {
+        allow read, write: if isValidId(userId) && isValidId(backtestId) && isOwner(userId);
+      }
+    }
+  }
+}
